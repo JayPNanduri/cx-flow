@@ -88,6 +88,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('com.github.ulisesbocchio:jasypt-spring-boot-starter:2.1.2')
     compile("io.atlassian.fugue:fugue:${atlassianFugueVersion}")
+    compile('com.fasterxml.jackson.core:jackson-core:2.12.0')
     compile("com.atlassian.jira:jira-rest-java-client-core:${atlassianVersion}") {
         exclude group: 'org.codehaus.jackson', module: 'jackson-core-asl'
         exclude group: 'org.codehaus.jackson', module: 'jackson-mapper-asl'

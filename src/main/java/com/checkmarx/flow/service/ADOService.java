@@ -20,12 +20,12 @@ import com.checkmarx.sdk.config.CxPropertiesBase;
 import com.checkmarx.sdk.dto.CxConfig;
 import com.checkmarx.sdk.dto.ScanResults;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.util.Strings;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -261,11 +261,11 @@ public class ADOService {
         ObjectMapper objMapper = new ObjectMapper();
         JsonNode root = objMapper.readTree(response.getBody());
         JsonNode value = root.path("value");
-        Iterator<JsonNode> threadsIter = value.getElements();
+        Iterator<JsonNode> threadsIter = value.elements();
         while (threadsIter.hasNext()) {
             JsonNode thread = threadsIter.next();
             JsonNode comments = thread.get("comments");
-            Iterator<JsonNode> commentsIter = comments.getElements();
+            Iterator<JsonNode> commentsIter = comments.elements();
             while (commentsIter.hasNext()) {
                 JsonNode commentNode = commentsIter.next();
                 // Remove empty or deleted comments
@@ -291,7 +291,7 @@ public class ADOService {
     }
 
     private RepoComment createRepoComment(JsonNode commentNode)  {
-        String commentBody = commentNode.path(ADO_COMMENT_CONTENT_FIELD_NAME).getTextValue();
+        String commentBody = commentNode.path(ADO_COMMENT_CONTENT_FIELD_NAME).textValue();
         long id = commentNode.path("id").asLong();
         String commentUrl = commentNode.path(("_links")).path("self").path("href").asText();
         String updatedStr = commentNode.path("lastContentUpdatedDate").asText();
